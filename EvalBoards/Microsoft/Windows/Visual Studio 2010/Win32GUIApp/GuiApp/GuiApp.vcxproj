@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Application\app.c" />
+    <ClCompile Include="..\Application\fs_app.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\uC-Clk\Source\clk.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-CPU\cpu_core.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-CPU\cpu_def.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-CPU\Win32\Visual Studio\cpu.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Dev\RAMDisk\fs_dev_ramdisk.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\FAT\fs_fat.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\FAT\fs_fat_dir.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\FAT\fs_fat_entry.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\FAT\fs_fat_fat12.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\FAT\fs_fat_fat16.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\FAT\fs_fat_fat32.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\FAT\fs_fat_file.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\FAT\fs_fat_journal.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\FAT\fs_fat_lfn.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\FAT\fs_fat_sfn.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\FAT\fs_fat_type.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\OS\uCOS-III\fs_os.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_api.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_buf.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_cache.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_cfg_fs.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_ctr.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_def.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_dev.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_dir.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_entry.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_err.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_file.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_inc.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_partition.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_sys.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_type.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_unicode.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_util.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-FS\Source\fs_vol.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-LIB\lib_ascii.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-LIB\lib_def.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-LIB\lib_math.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-LIB\lib_mem.h" />
+    <ClInclude Include="..\..\..\..\..\..\uC-LIB\lib_str.h" />
+    <ClInclude Include="..\..\..\..\..\..\uCOS-III\Ports\Win32\Visual Studio\os_cpu.h" />
+    <ClInclude Include="..\..\..\..\..\..\uCOS-III\Source\os.h" />
+    <ClInclude Include="..\..\..\..\..\..\uCOS-III\Source\os_type.h" />
+    <ClInclude Include="..\Application\app_cfg.h" />
+    <ClInclude Include="..\Application\clk_cfg.h" />
+    <ClInclude Include="..\Application\cpu_cfg.h" />
+    <ClInclude Include="..\Application\fs_app.h" />
+    <ClInclude Include="..\Application\fs_cfg.h" />
+    <ClInclude Include="..\Application\os_cfg.h" />
+    <ClInclude Include="..\Application\os_cfg_app.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\uC-FS_LIB\uC-FS-V4.lib" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5C916D15-4B74-4197-9C8E-984867A8FDB9}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>uCFSV4Trial</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MSBuildProjectDirectory)\..\..\..\..\..\..\uCOS-III\Ports\Win32\Visual Studio;$(MSBuildProjectDirectory)\..\..\..\..\..\..\uCOS-III\Source;$(MSBuildProjectDirectory)\..\..\..\..\..\..\uC-Clk\OS\uCOS-III;$(MSBuildProjectDirectory)\..\..\..\..\..\..\uC-Clk\Source;$(MSBuildProjectDirectory)\..\..\..\..\..\..\uC-LIB;$(MSBuildProjectDirectory)\..\..\..\..\..\..\uC-CPU\Win32\Visual Studio;$(MSBuildProjectDirectory)\..\..\..\..\..\..\uC-CPU;$(MSBuildProjectDirectory)\..\..\..\..\..\..\uC-FS\Dev\RAMDisk;$(MSBuildProjectDirectory)\..\..\..\..\..\..\uC-FS\OS\uCOS-III;$(MSBuildProjectDirectory)\..\..\..\..\..\..\uC-FS\FAT;$(MSBuildProjectDirectory)\..\..\..\..\..\..\uC-FS\Source;$(MSBuildProjectDirectory)\..\Application;$(MSBuildProjectDirectory)\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
