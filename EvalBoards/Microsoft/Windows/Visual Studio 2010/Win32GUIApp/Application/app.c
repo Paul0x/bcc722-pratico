@@ -43,7 +43,7 @@ OS_SEM mutexMotor; // Mutex do motor - impede o movimento do motor caso algum ev
 OS_SEM mutexSensorBomba; // Mutex do sensor de bombas - impede que mais de um recurso procure por bombas ao mesmo tempo.
 OS_SEM mutexDefused; // Mutex do desarmador de bombas - bloqueia ações enquanto o robô está desarmando a bomba
 OS_SEM mutexDesarmador; // Mutex que habilita o desarmador de bombas
-OS_SEM mutexDesenharCampo; // Mutex que sincroniza o desenho do campo - sincronização
+OS_SEM semDesenharCampo; // Mutex que sincroniza o desenho do campo - sincronização
 
 /**
 *  Definição do campo e variáveis do robo
@@ -71,9 +71,9 @@ static void desenharCampo();
 void ClearScreen();
 
 /**
- * PreencherCampo
- * Função que preenche o campo e define onde estão as bombas, necessita de uma seed para o srand
- */
+* PreencherCampo
+* Função que preenche o campo e define onde estão as bombas, necessita de uma seed para o srand
+*/
 static void preencherCampo(int seed) {
 	int i = 0;
 	int j = 0;
@@ -91,8 +91,8 @@ static void preencherCampo(int seed) {
 }
 
 /** 
- * Cria a chance de ocorrer uma explosão nos arredores e avisa ao operador para ficar atento
- */
+* Cria a chance de ocorrer uma explosão nos arredores e avisa ao operador para ficar atento
+*/
 static void AppTaskExplodirBomba() {
 	OS_ERR err_os;
 	CPU_TS ts;
@@ -104,11 +104,15 @@ static void AppTaskExplodirBomba() {
 				if(campo[i][j] == 1) {
 					if(rand() % 100 > 90) {
 						campo[i][j] = 2;
-						OSSemPend(&mutexDesenharCampo,0,OS_OPT_PEND_BLOCKING, &ts, &err_os);
-						desenharCampo();
-						printf("\nUma bomba explodiou na pos [i][j] - ATENCAO");
-						OSTimeDlyHMSM(0, 0, 0, 1000, OS_OPT_TIME_DLY, &err_os);
-						OSSemPost(&mutexDesenharCampo,OS_OPT_POST_ALL, &err_os);
+						OSSemPend(&mutexSensorBomba, 500, OS_OPT_PEND_BLOCKING, &ts, &err_os);
+						if(err_os != OS_ERR_TIMEOUT) {
+							OSSemPend(&semDesenharCampo,0,OS_OPT_PEND_BLOCKING, &ts, &err_os);
+							desenharCampo();
+							printf("\nUma bomba explodiou na pos [i][j] - ATENCAO");
+							OSTimeDlyHMSM(0, 0, 0, 1000, OS_OPT_TIME_DLY, &err_os);
+							OSSemPost(&semDesenharCampo,OS_OPT_POST_ALL, &err_os);
+							OSSemPost(&mutexSensorBomba,OS_OPT_POST_ALL, &err_os);
+						}
 					};
 					OSTimeDlyHMSM(0, 0, 0, 500, OS_OPT_TIME_DLY, &err_os);
 				}
@@ -118,8 +122,8 @@ static void AppTaskExplodirBomba() {
 }
 
 /**
- * Realiza o desenho da tela
- */
+* Realiza o desenho da tela
+*/
 static void desenharCampo() {
 	int i = 0;
 	int j = 0;
@@ -160,8 +164,8 @@ static void desenharCampo() {
 }
 
 /**
- * Função que limpa a tela do terminal utilizando a lib do windows
- */
+* Função que limpa a tela do terminal utilizando a lib do windows
+*/
 void ClearScreen()
 {
 	HANDLE                     hStdOut;
@@ -201,10 +205,10 @@ void ClearScreen()
 
 
 /**
- * AppTaskDesarmarBomba
- * Sempre que o robô encontrar uma bomba ele tentará desarmá-la, se o desarmador estiver disponível. 
- * Caso contrário ele apenas avisa ao operador que existe uma bomba na proximidade.
- */
+* AppTaskDesarmarBomba
+* Sempre que o robô encontrar uma bomba ele tentará desarmá-la, se o desarmador estiver disponível. 
+* Caso contrário ele apenas avisa ao operador que existe uma bomba na proximidade.
+*/
 static void AppTaskDesarmarBomba (void *p_arg) {
 	CPU_TS ts;
 	OS_ERR err_os;
@@ -228,16 +232,16 @@ static void AppTaskDesarmarBomba (void *p_arg) {
 			flagDesarmou = 1;
 		} 
 		if(flagDesarmou == 1) {
-			OSSemPend(&mutexDesenharCampo,50,OS_OPT_PEND_BLOCKING, &ts, &err_os);
+			OSSemPend(&semDesenharCampo,50,OS_OPT_PEND_BLOCKING, &ts, &err_os);
 			if(err_os != OS_ERR_TIMEOUT) {
 				desenharCampo();
 				printf("\nDesarmando Bombas!");
 				OSTimeDlyHMSM(0, 0, 0, 1000, OS_OPT_TIME_DLY, &err_os);
 				desenharCampo();
-				OSSemPost(&mutexDesenharCampo,OS_OPT_POST_ALL, &err_os);
+				OSSemPost(&semDesenharCampo,OS_OPT_POST_ALL, &err_os);
 			} else {
 				OSTimeDlyHMSM(0, 0, 0, 1000, OS_OPT_TIME_DLY, &err_os);
-				OSSemPost(&mutexDesenharCampo,OS_OPT_POST_ALL, &err_os);
+				OSSemPost(&semDesenharCampo,OS_OPT_POST_ALL, &err_os);
 			}
 		}
 		flagDesarmou = 0;
@@ -256,6 +260,7 @@ static void AppTaskVerificarArredores (void  *p_arg){
 	CPU_TS ts;
 	OS_ERR  err_os;
 	while(1) {
+		OSSemPend(&mutexSensorBomba, 0, OS_OPT_PEND_BLOCKING, &ts, &err_os);
 		/* Verifica se cada um dos 4 cantos possui bombas */
 		if(robo[1] < 19 && campo[robo[0]][robo[1]+1] == 1) {
 			bombaEncontradaFlag[0] = 1;
@@ -277,6 +282,7 @@ static void AppTaskVerificarArredores (void  *p_arg){
 		} else {
 			bombaEncontradaFlag[3] = 0;
 		}
+		OSSemPost(&mutexSensorBomba, OS_OPT_POST_ALL, &err_os);
 
 		/* Desabilita o motor e ativa o desarmador caso encontre uma bomba */
 		if(bombaEncontradaFlag[0] == 1 || bombaEncontradaFlag[1] == 1 || bombaEncontradaFlag[2] == 1 || bombaEncontradaFlag[3] == 1) {
@@ -337,7 +343,7 @@ static void AppTaskMovimentarRobo (void  *p_arg) {
 		OSSemPost(&mutexMotor, OS_OPT_POST_ALL, &err_os);
 
 		OSTimeDlyHMSM(0, 0, 0, 100, OS_OPT_TIME_DLY, &err_os);
-			desenharCampo();
+		desenharCampo();
 	}	
 
 }
@@ -379,12 +385,12 @@ static  void  App_TaskStart (void  *p_arg)
 		&err_os);
 	OSSemCreate(&mutexDesarmador, "mut_desarmador", 1,
 		&err_os);
-	OSSemCreate(&mutexDesenharCampo, "mut_desenhar_campo", 1,
+	OSSemCreate(&semDesenharCampo, "mut_desenhar_campo", 1,
 		&err_os);
 
 
 	/** Inicializa as Tarefas **/
-	
+
 	OSTaskCreate((OS_TCB*)&AppTaskMovimentarRoboTCB, 
 		(CPU_CHAR*)"MovimentarRobo",
 		(OS_TASK_PTR)AppTaskMovimentarRobo, (void*)0, 
